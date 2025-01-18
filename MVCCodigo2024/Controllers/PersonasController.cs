@@ -34,7 +34,6 @@ namespace MVCCodigo2024.Controllers
         public ActionResult Create()
         {
        
-
             PersonaModel persona = new PersonaModel();
        
             return View(persona);
@@ -70,6 +69,7 @@ namespace MVCCodigo2024.Controllers
 
             personaModificar.Nombres = model.Nombres;
             personaModificar.Apellidos = model.Apellidos;
+            personaModificar.Edad = model.Edad;
 
 
             return RedirectToAction("Index");
@@ -77,11 +77,27 @@ namespace MVCCodigo2024.Controllers
 
 
         [HttpGet]
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
         {
-            PersonaModel persona = new PersonaModel();
+            PersonaModel model = ((List<PersonaModel>)Session["Personas"])
+                                 .Where(x => x.PersonaID == id).FirstOrDefault();
 
-            return View(persona);
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult Delete(int id, PersonaModel model)
+        {
+
+            //Buscar persona a modificar
+            PersonaModel personaEliminar = ((List<PersonaModel>)Session["Personas"])
+                                 .Where(x => x.PersonaID == id).FirstOrDefault();
+
+
+            ((List<PersonaModel>)Session["Personas"]).Remove(personaEliminar);
+
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult Details()
