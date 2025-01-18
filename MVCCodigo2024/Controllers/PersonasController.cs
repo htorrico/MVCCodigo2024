@@ -9,10 +9,14 @@ namespace MVCCodigo2024.Controllers
 {
     public class PersonasController : Controller
     {
+
+        
+
         // GET: Personas
         [HttpGet]
         public ActionResult Index()
         {
+                      
             List<PersonaModel> personas = new List<PersonaModel>();
 
             if (Session["Personas"] != null)
@@ -29,7 +33,10 @@ namespace MVCCodigo2024.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            PersonaModel persona = new PersonaModel();                      
+       
+
+            PersonaModel persona = new PersonaModel();
+       
             return View(persona);
         }
 
@@ -43,15 +50,32 @@ namespace MVCCodigo2024.Controllers
         }
 
 
-
         [HttpGet]
-        public ActionResult Edit()
-        {
-            PersonaModel persona = new PersonaModel();
-   
+        public ActionResult Edit(int id)
+        {                      
+            PersonaModel model = ((List<PersonaModel>)Session["Personas"])
+                                  .Where(x=>x.PersonaID==id).FirstOrDefault();
 
-            return View(persona);
+            return View(model);
         }
+
+        [HttpPost]
+        public ActionResult Edit(PersonaModel model)
+        {
+
+            //Buscar persona a modificar
+            PersonaModel personaModificar = ((List<PersonaModel>)Session["Personas"])
+                                 .Where(x => x.PersonaID == model.PersonaID).FirstOrDefault();
+
+
+            personaModificar.Nombres = model.Nombres;
+            personaModificar.Apellidos = model.Apellidos;
+
+
+            return RedirectToAction("Index");
+        }
+
+
         [HttpGet]
         public ActionResult Delete()
         {
