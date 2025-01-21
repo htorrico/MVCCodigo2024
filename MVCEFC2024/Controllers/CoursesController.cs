@@ -48,6 +48,7 @@ namespace MVCEFC2024.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CourseID,Name,Description,Credit,Nuevo,Field")] Courses courses)
         {
+            
             if (ModelState.IsValid)
             {
                 courses.IsActive = true;

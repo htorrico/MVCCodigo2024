@@ -26,5 +26,12 @@ namespace MVCEFC2024.Controllers
 
             return View();
         }
+
+        public ActionResult Demo()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
     }
 }

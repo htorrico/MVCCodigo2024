@@ -11,7 +11,8 @@ namespace MVCEFC2024.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Courses
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,8 +22,13 @@ namespace MVCEFC2024.Models
         }
     
         public int CourseID { get; set; }
+        [Required(ErrorMessage = "Ingrese el nombre por favor")]
+        [MinLength(5)]
         public string Name { get; set; }
+
+        [Required]
         public string Description { get; set; }
+        [Required]
         public Nullable<int> Credit { get; set; }
         public string Nuevo { get; set; }
         public Nullable<bool> IsActive { get; set; }
