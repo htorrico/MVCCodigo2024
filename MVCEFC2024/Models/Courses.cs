@@ -25,6 +25,9 @@ namespace MVCEFC2024.Models
         public string Description { get; set; }
         public Nullable<int> Credit { get; set; }
         public string Nuevo { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public string Field { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enrollments> Enrollments { get; set; }

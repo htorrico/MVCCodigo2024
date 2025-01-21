@@ -17,7 +17,7 @@ namespace MVCEFC2024.Controllers
         // GET: Courses
         public ActionResult Index()
         {
-            return View(db.Courses.ToList());
+            return View(db.Courses.Where(x=>x.IsActive==true).ToList());
         }
 
         // GET: Courses/Details/5
@@ -46,10 +46,11 @@ namespace MVCEFC2024.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CourseID,Name,Description,Credit,Nuevo")] Courses courses)
+        public ActionResult Create([Bind(Include = "CourseID,Name,Description,Credit,Nuevo,Field")] Courses courses)
         {
             if (ModelState.IsValid)
             {
+                courses.IsActive = true;
                 db.Courses.Add(courses);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,11 +79,20 @@ namespace MVCEFC2024.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CourseID,Name,Description,Credit,Nuevo")] Courses courses)
+        public ActionResult Edit([Bind(Include = "CourseID,Name,Description,Credit,Nuevo,Field")] Courses courses)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(courses).State = EntityState.Modified;
+
+                Courses courseModify = db.Courses.Find(courses.CourseID);
+
+                courseModify.Name = courses.Name;
+                courseModify.Description = courses.Description;
+                courseModify.Credit = courses.Credit;
+                courseModify.Nuevo = courses.Nuevo;
+                courseModify.Field = courses.Field;
+
+                db.Entry(courseModify).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -110,7 +120,8 @@ namespace MVCEFC2024.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Courses courses = db.Courses.Find(id);
-            db.Courses.Remove(courses);
+            courses.IsActive = false;
+            db.Entry(courses).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
