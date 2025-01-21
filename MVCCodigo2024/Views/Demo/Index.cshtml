@@ -3,6 +3,31 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Bienvenido a CODIGO 2024</h2>
-<h2>Hugo Felipe Torrico Márquez</h2>
+@{
+    string nombre = "Hugo";
+    string apellido = "torrico";
+    int edad = 20;
+}
+
+@nombre
+<br />
+@apellido
+<br />
+@edad
+
+
+@if (edad > 18)
+{
+    <h2>Es Mayor de Edad</h2>
+}
+else
+{
+    <h2>Es Menor de Edad</h2>
+}
+
+@for (int i = 0; i < 20; i++)
+{
+    <h2>@nombre</h2>
+    
+}
 
